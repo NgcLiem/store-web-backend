@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="Day4-ImgGallery.css">
+    <link rel="stylesheet" href="form/themify-icons/themify-icons.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="image">
+            <img src="/img/img1.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img2.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img3.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img4.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img5.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img6.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img7.jpeg" alt="">
+        </div>
+        <!-- item -->
+        <div class="image">
+            <img src="/img/img8.jpeg" alt="">
+        </div>
+        <!-- item -->
+        
+    </div>
+    <div class="gallery">
+        <i class="ti-close"></i>
+
+        <div class="gallery_inner">
+            <img src="/img/img8.jpeg" alt="">
+        </div>
+
+        <div class="control control-prev">
+            <i class="ti-angle-left"></i>
+        </div>
+
+        <div class="control control-next">
+            <i class="ti-angle-right"></i>
+        </div>
+    </div>
+</body>
+<script>
+    var images = document.querySelectorAll('.image img')
+    var prev = document.querySelector('.control-prev')
+    var next = document.querySelector('.control-next')
+    var close = document.querySelector('.ti-close')
+    var galleryImg = document.querySelector('.gallery_inner img') 
+    var gallery = document.querySelector('.gallery')
+
+    var currentIndex = 0;
+
+    function galleryShow(){
+        if(currentIndex == 0){
+            prev.classList.add('hide')
+        }
+
+        else{
+            prev.classList.remove('hide')
+        }
+
+        if(currentIndex == images.length-1){
+            next.classList.add('hide')
+        }
+
+        else{
+            next.classList.remove('hide')
+        }
+
+        //display 
+        galleryImg.src = images[currentIndex].src
+            gallery.classList.add('show')
+    }
+
+    //nhan cai nao ra cai do
+    images.forEach((item, index)=>{
+        item.addEventListener('click', function(){
+            currentIndex = index
+            galleryShow()
+        })
+    })
+
+    // nhan icon X la thoat
+    close.addEventListener('click', function(){
+        gallery.classList.remove('show')
+    })
+
+    // nhan esc la thoat
+    document.addEventListener('keydown', function(e){
+        if(e.keyCode == 27){
+            gallery.classList.remove('show')
+        }
+    })
+
+    // nhan nut trai tren ban phim de previous
+    // prev.addEventListener('keydown', function(e){
+    //     if(e.keyCode == 37){
+    //     if(currentIndex > 0){
+    //             currentIndex--
+    //             galleryShow()
+    //         }
+    //     }
+    // })
+
+    // nut trai
+    prev.addEventListener('click', function(){
+        if(currentIndex > 0){
+            currentIndex--
+            galleryShow()
+        }
+    })
+
+    // nut phai
+    next.addEventListener('click', function(){
+        if(currentIndex < images.length-1){
+            currentIndex++
+            galleryShow()
+        }
+    })
+
+    // nhan vung ngoai thi thoat
+    // function toggleShow(e){
+    //     gallery.classList.toggle('hide')
+    // }
+    // gallery.addEventListener('click', function(e){
+    //     if(e.target == e.currentTarget){
+    //         toggleShow()
+    //     }
+    // })
+
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Tags</title>
+    <link rel="stylesheet" href="Day7-SearchTags.css">
+    <link rel="stylesheet" href="form/themify-icons/themify-icons.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h2 class="title">Search tags</h2>
+        <div class="content">
+            <li>
+                Toan
+                <i class="ti-close"></i>
+            </li>
+            <li>
+                Toan
+                <i class="ti-close"></i>
+            </li>
+            <input type="text" placeholder="Type and Enter" class="input">
+        </div>
+        <button class="remove-all">Remove all</button>
+    </div>
+</body>
+<script>
+    var content = document.querySelector('.content')
+    var input = document.querySelector('.content input')
+    var btnRemoveAll = document.querySelector('.remove-all')
+
+    var tags =['Nodejs', 'Reactjs']
+
+    function render(){
+        content.innerHTML = ''
+        for (let i = 0; i < tags.length; i++) {
+            const tag = tags[i];
+            content.innerHTML += `<li>
+                                    ${tag}
+                                    <i class="ti-close" onclick='removeTag(${i})'></i>
+                                </li>`
+            
+        }
+
+        content.appendChild(input)
+        input.focus()
+    }
+
+    function removeTag(index){
+        tags.splice(index, 1)
+        render()
+    }
+
+    btnRemoveAll.addEventListener('click', function(){
+        tags = []
+        render()
+    })
+
+    render()
+
+    input.addEventListener('keydown', function(e){
+        if(e.key == 'Enter'){
+            tags.push(input.value.trim())
+            input.value = ''
+            render()
+        }
+    })
+
+</script>
+</html>

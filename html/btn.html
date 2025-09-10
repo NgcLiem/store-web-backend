@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Button</title>
+    <link rel="stylesheet" href="./styleBtn.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />    
+</head>
+<body>
+    <div id ="toast"></div>
+    <div>
+        <div onclick = "showSuccessToast();" class="btn btn--success">Show success toast</div>
+        <div onclick = "showErrorToast();" class="btn btn--danger">Show error toast</div>
+    </div>
+
+    <!-- <div id ="toast">
+        <div class="toast toast--success">
+            <div class="toast__icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class = "toast__title">Success</h3>
+                <div class="toast__msg">May vi tinh ket noi Internet</div>
+            </div>
+            <div class="toast__close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+    </div> -->
+
+    <script>
+        function toast({ 
+            title = '', 
+            message = '', 
+            type = 'info', 
+            duration = 1000
+
+        })
+        {
+            const main = document.getElementById('toast');
+            if (main){
+                const toast = document.createElement('div');
+                
+                const autoRemoveId = setTimeout(function() {
+                    main.removeChild(toast);
+                }, duration + 1000)
+
+                toast.onclick = function(e){
+                    if (e.target.closest('.toast__close')){
+                        main.removeChild(toast);
+                        clearTimeout(autoRemoveId)
+                    }
+                }
+
+                const icons = {
+                    success: "fas fa-check-circle",
+                    info: "fas fa-info-circle",
+                    warning: "fas fa-exclamation-circle",
+                    error: "fas fa-exclamation-circle"
+                    };
+                const icon = icons[type];
+                const delay = (duration / 1000).toFixed(2);
+
+                toast.classList.add('toast', `toast--${type}`);
+                toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+                toast.innerHTML = `
+                        <div class="toast__icon">
+                    <i class=${icon}></i>
+                </div>
+                <div class="toast__body">
+                    <h3 class = "toast__title">${title}</h3>
+                    <div class="toast__msg">${message}</div>
+                </div>
+                <div class="toast__close">
+                    <i class="fas fa-times"></i>
+                </div>               
+                `;
+
+                main.appendChild(toast)
+
+                
+            }
+        }
+
+        function showSuccessToast() {
+            toast({
+            title: 'Thanh cong',
+            message: 'Ban da dang ky thanh cong',
+            type: 'success',
+            duration: 5000
+        })
+        }
+
+        function showErrorToast() {
+            toast({
+            title: 'That bai',
+            message: 'Co loi xay ra',
+            type: 'error',
+            duration: 5000
+        })
+        }
+
+
+    </script>
+    <!-- Info
+    <div class="toast toast--info">
+        <div class="toast__icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class = "toast__title">Info</h3>
+            <div class="toast__msg">May vi tinh ket noi Internet</div>
+        </div>
+        <div class="toast__close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div> -->
+
+    <!-- Warning -->
+    <!-- <div class="toast toast--warning">
+        <div class="toast__icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class = "toast__title">Warning</h3>
+            <div class="toast__msg">May vi tinh ket noi Internet</div>
+        </div>
+        <div class="toast__close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div> -->
+
+    <!-- Error -->
+    <!-- <div class="toast toast--error">
+        <div class="toast__icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class = "toast__title">Error</h3>
+            <div class="toast__msg">May vi tinh ket noi Internet</div>
+        </div>
+        <div class="toast__close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div> -->
+
+
+</body>
+</html>

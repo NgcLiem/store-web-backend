@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="Day9-WeatherApp.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs
+    /font-awesome/6.0.0-beta2/css/all.min.css" 
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5
+    VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"> -->
+    <link rel="stylesheet" href="form/themify-icons/themify-icons.css">    
+</head>
+<body>
+    <div class="weather">
+        <input type="text" class="search" placeholder="Search...">
+        <div class="content">
+            <h1 class="capital">
+                <span class="city">Ha Noi</span>
+                <span>,</span>
+                <span class="country">VN</span>
+            </h1>
+            <div class="time">21/12/2024, 3:25:46 PM</div>
+            <div class="temperature">
+                <span class="value">23 <sup>o</sup>C
+                </span>
+            </div>
+            <div class="short-decs">Clouds</div>
+            <div class="more-decs">
+
+                <div class="visibility">
+                    <i class="ti-eye"></i>
+                    <span>1000m</span>
+                </div>
+
+                <div class="wind">
+                    <i class="ti-pulse"></i>
+                    <span>1000m</span>
+                </div>
+
+                <div class="sun">
+                    <i class="ti-shine"></i>
+                    <span>1000m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var search = document.querySelector('.search')
+    var city = document.querySelector('.city')
+    var country = document.querySelector('.country')
+    var value = document.querySelector('.value')
+    var shortDecs = document.querySelector('.short-decs')
+    var visibility = document.querySelector('.visibility span')
+    var wind = document.querySelector('.wind span')
+    var sun = document.querySelector('.sun span')
+    var time = document.querySelector('.time')
+    var content = document.querySelector('.content')
+    var body = document.querySelector('body')
+
+    async function changeWeatherUI(capitalSearch){
+        
+        let apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${capitalSearch}&appid=cb8d857e9528680474d1a7a90b239fba`
+        
+        let data = await fetch(apiURL).then(res=> res.json())
+        console.log(data)
+        if(data.cod == 200){
+            content.classList.remove('hide')
+            city.innerText = data.name
+            country.innerText = data.sys.country
+            visibility.innerText = data.visibility + 'm'
+            wind.innerText = data.wind.speed +'m/s'
+            sun.innerText = data.main.humidity + '%'
+            let temp = Math.round(data.main.temp - 273.15)
+            value.innerText = temp
+            shortDecs.innerText = data.weather[0] ? data.weather[0].main :''
+            time.innerText = new Date().toLocaleString('vi')
+
+            body.setAttribute('class','hot')
+            if(temp <= 25){
+                body.setAttribute('class','warm')
+            }
+
+            if(temp <= 22){
+                body.setAttribute('class','cool')
+            }
+            
+            if(temp <= 19){
+                body.setAttribute('class','cold')
+            }         
+        }
+        else{
+            content.classList.add('hide')
+        }
+    }
+
+    search.addEventListener('keypress', function(e){
+        if(e.code == 'Enter'){
+            let capitalSearch = search.value.trim()
+            changeWeatherUI(capitalSearch)
+        }
+    })
+
+    changeWeatherUI('ha noi')
+
+</script>
+</html>

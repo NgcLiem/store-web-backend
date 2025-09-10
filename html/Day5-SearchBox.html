@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serach Box</title>
+    <link rel="stylesheet" href="Day5-SearchBox.css">
+    <link rel="stylesheet" href="form/themify-icons/themify-icons.css">
+</head>
+<body>
+    <div class="search-box">
+        <input type="text" class="search-box-input">
+        <button class="but-search">
+            <i class="ti-search"></i>
+        </button>
+    </div>
+</body>
+<script>
+    var btnSearch = document.querySelector('.but-search')
+
+    btnSearch.addEventListener('click', function(){
+        this.parentElement.classList.toggle('open')
+        this.previousElementSibling.focus();
+    })
+
+    // var searchbox = document.querySelector('.search-box')
+
+    // function addOpen(){
+    //     searchbox.classList.toggle('open')
+    // }
+
+    // searchbox.addEventListener('click', addOpen)
+</script>
+</html>

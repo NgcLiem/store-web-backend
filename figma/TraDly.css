@@ -1,0 +1,160 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.full{
+    width: 375px;
+    height: 812px;
+    background-color: #33907C;  
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading{
+    width: 375px;
+    height: 44px;
+    color: #000;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    color: #fff;
+}
+
+.hour{
+    padding: 16px;
+}
+
+.heading .useFul{
+    display: flex;
+    font: 15px;
+    padding: 16px;
+}
+
+.heading .network{
+
+}
+
+.heading .wifi{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.heading .pin{
+
+}
+
+.heading .ti-bar-chart{
+    
+}
+
+.middle{
+    text-align: center;
+    line-height: 812px;
+    display: block;
+    color: #fff;
+}
+
+.middle .comment{
+    font-size: 100px;
+}
+
+.text{
+
+    line-height: 612px;
+    color: #fff;
+    display: inline-block;
+}
+
+.full2{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.heading2{
+    
+}
+
+.bottom{
+    width: 307px;
+    height: 334px;
+    background-color: red;
+    align-self: flex-start;
+    padding-left: 16px;
+}
+
+.top{
+    width: 375px;
+    height: 454px;
+    background-color: #ccc;
+    
+}
+
+
+
+ /* .iphone {
+    width: 320px;
+    height: 568px;  Kích thước màn hình iPhone 5/SE 
+    background-color: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    margin: 50px auto;
+  }
+  
+  .status-bar {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .time {
+    font-weight: bold;
+  }
+  
+  .network {
+    display: flex;
+    align-items: center;
+  }
+  
+  .network > div {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+  
+  .network .wifi {
+    background-color: #fff;
+  }
+  
+  .network .cellular {
+    background-color: #0f0;
+  }
+  
+  .battery {
+    width: 40px;
+    height: 20px;
+    background-color: #333;
+    position: relative;
+  }
+  
+  .battery-level {
+    width: 90%;
+    height: 100%;
+    background-color: #0f0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  } */
+  

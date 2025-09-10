@@ -1,0 +1,1 @@
+print(movie.__dict__)

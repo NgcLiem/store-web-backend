@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keydown</title>
+    <link rel="stylesheet" href="Day6-Keydown.css">
+    <link rel="stylesheet" href="form/themify-icons/themify-icons.css">
+</head>
+<body>
+    <button class="alert">Press Any Key</button>
+    <div class="box hide">
+        <div class="result"></div>
+        <div class="card ">
+            <div class="detail key">
+                <p>Key</p>
+                <p>0</p>
+            </div>
+            <div class="detail location">
+                <p>Location</p>
+                <p></p>
+            </div>
+            <div class="detail which">
+                <p>Which</p>
+                <p></p>
+            </div>
+            <div class="detail code">
+                <p>Code</p>
+                <p></p>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    var eKey = document.querySelector('.detail.key p:last-child')
+    var eLocation = document.querySelector('.detail.location p:last-child')
+    var eWhich = document.querySelector('.detail.which p:last-child')
+    var eCode = document.querySelector('.detail.code p:last-child')
+    var alert = document.querySelector('.alert')
+    var box = document.querySelector('.box')
+    var result = document.querySelector('.result')
+
+    document.addEventListener('keydown', e=>{
+        alert.classList.add('hide')
+        box.classList.remove('hide')
+
+        eKey.innerText = e.key
+        eLocation.innerText = e.location
+        eWhich.innerText = e.which
+        eCode.innerText = e.code
+        result.innerHTML = e.which
+    })
+</script>
+</html>

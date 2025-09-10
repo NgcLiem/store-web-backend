@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal</title>
+    <link rel="stylesheet" href="Day3-ModalPopupMaterialUI.css">
+    <link rel="stylesheet" href="form/themify-icons/themify-icons.css">
+</head>
+<body>
+    <button class="open-modal-btn">Open modal</button>
+    <div class="modal hide">
+        <div class="modal-open">
+            <div class="modal-header">
+                <h3>Welcome to Nodemy</h3>
+                <i class="ti-close"></i>
+            </div>
+            <div class="modal-body">
+                <h2>Modal</h2>
+                <p>Đây là phần body của modal</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var btnOpen = document.querySelector('.open-modal-btn')  
+    var modal = document.querySelector('.modal') 
+    var btnClose = document.querySelector('.modal-footer button') 
+    var iconClose = document.querySelector('.modal i') 
+
+    function toggleModal(e){
+        modal.classList.toggle('hide')
+    }
+
+    btnOpen.addEventListener('click',toggleModal)
+    btnClose.addEventListener('click',toggleModal)
+    iconClose.addEventListener('click',toggleModal)
+    modal.addEventListener('click', function(e){
+        if(e.target == e.currentTarget){
+            toggleModal()
+        }
+    })
+
+</script>
+</html>

@@ -1,0 +1,102 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color: #f2726a;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:linear-gradient(45deg, rgb(0, 133, 62), rgb(65, 227, 119)) ;
+}
+
+.main{
+    width: 300px;
+    height: 400px;
+    background-color: rgb(36, 38, 40);
+    text-align: center;
+    color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 15px;
+}
+
+.img-ava{
+    width: 120px;
+    height: 120px;
+    border: 4px solid var(--color);
+    border-radius: 50%;
+    margin: 0px auto;
+    cursor: pointer;
+    overflow: hidden;
+    transform: translateY(25px);
+    transition: 0.5s;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.name{
+    margin-top: 40px;
+    font-size: 24px;
+    font-weight: 700;
+
+}
+
+.title{
+    font-size: 16px;
+    color: var(--color);
+    margin-top: 5px;
+    
+}
+
+.icon{
+    margin-top: 10px;
+}
+
+.icon a{
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: inline-block;
+    margin: 25px 20px 40px;
+}
+
+.icon a:hover{
+    color: var(--color);
+    opacity: 0.9;
+}
+
+button{
+    padding: 12px 30px;
+    border: 2px solid var(--color);
+    background-color: black;
+    color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: var(--color);
+    transition: 0.5s;
+}
+
+.img-ava:hover{
+    width: 100%;
+    height: 100%;
+    border-radius: unset;
+    transform: unset;
+    border: unset;
+}
+
+

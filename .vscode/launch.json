@@ -1,0 +1,614 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    
+    {
+      "type": "java",
+      "name": "bai1",
+      "request": "launch",
+      "mainClass": "week1.bai1",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "a126",
+      "request": "launch",
+      "mainClass": "Java.a126",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Java.Main",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "a125",
+      "request": "launch",
+      "mainClass": "Java.a125",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "quanLySinhVien",
+      "request": "launch",
+      "mainClass": "QuanLySinhVienJava.quanLySinhVien",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "SelectionSort",
+      "request": "launch",
+      "mainClass": "CTDLGT.SelectionSort",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "InsertSoft",
+      "request": "launch",
+      "mainClass": "CTDLGT.InsertSoft",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "BubbleSort",
+      "request": "launch",
+      "mainClass": "CTDLGT.BubbleSort",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "main",
+      "request": "launch",
+      "mainClass": "NhanVien.main",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai73_2DAnimation",
+      "request": "launch",
+      "mainClass": "Java.bai73_2DAnimation",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai72_2DGraphics",
+      "request": "launch",
+      "mainClass": "Java.bai72_2DGraphics",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai71_KeyBlinding",
+      "request": "launch",
+      "mainClass": "Java.bai71_KeyBlinding",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai69_MouseListener",
+      "request": "launch",
+      "mainClass": "Java.bai69_MouseListener",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai68_KeyListener",
+      "request": "launch",
+      "mainClass": "Java.bai68_KeyListener",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai67_ColorChoose",
+      "request": "launch",
+      "mainClass": "Java.bai67_ColorChoose",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai66_SelectAFile",
+      "request": "launch",
+      "mainClass": "Java.bai66_SelectAFile",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai65_MenuBar",
+      "request": "launch",
+      "mainClass": "Java.bai65_MenuBar",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai64_ProgressBar",
+      "request": "launch",
+      "mainClass": "Java.bai64_ProgressBar",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai63_SliderDemo",
+      "request": "launch",
+      "mainClass": "Java.bai63_SliderDemo",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai62_ComboBox",
+      "request": "launch",
+      "mainClass": "Java.bai62_ComboBox",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai61_RadioButton",
+      "request": "launch",
+      "mainClass": "Java.bai61_RadioButton",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai60_CheckBox",
+      "request": "launch",
+      "mainClass": "Java.bai60_CheckBox",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "Example",
+      "request": "launch",
+      "mainClass": "Java.Example",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai59_TextField",
+      "request": "launch",
+      "mainClass": "Java.bai59_TextField",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai58_JOptionPane",
+      "request": "launch",
+      "mainClass": "Java.bai58_JOptionPane",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai57_Main",
+      "request": "launch",
+      "mainClass": "Java.bai57_Main",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai56_LayeredPane",
+      "request": "launch",
+      "mainClass": "Java.bai56_LayeredPane",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai55_GridLayout",
+      "request": "launch",
+      "mainClass": "Java.bai55_GridLayout",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai54_FlowLayout",
+      "request": "launch",
+      "mainClass": "Java.bai54_FlowLayout",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai53_BorderLayout",
+      "request": "launch",
+      "mainClass": "Java.bai53_BorderLayout",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai52_buttons",
+      "request": "launch",
+      "mainClass": "Java.bai52_buttons",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai51_Panel",
+      "request": "launch",
+      "mainClass": "Java.bai51_Panel",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai50_Labels",
+      "request": "launch",
+      "mainClass": "Java.bai50_Labels",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai49_GUI",
+      "request": "launch",
+      "mainClass": "Java.bai49_GUI",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai48_Audio",
+      "request": "launch",
+      "mainClass": "Java.bai48_Audio",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai47_FileReader",
+      "request": "launch",
+      "mainClass": "Java.bai47_FileReader",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai46_FileWriter",
+      "request": "launch",
+      "mainClass": "Java.bai46_FileWriter",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai45_File",
+      "request": "launch",
+      "mainClass": "Java.bai45_File",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai44_ExceptionHandling",
+      "request": "launch",
+      "mainClass": "Java.bai44_ExceptionHandling",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai43_DynamicPoly",
+      "request": "launch",
+      "mainClass": "Java.bai43_DynamicPoly",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai42_Polymorphism",
+      "request": "launch",
+      "mainClass": "Java.bai42_Polymorphism",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai41_Interface",
+      "request": "launch",
+      "mainClass": "Java.bai41_Interface",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai40_ObjectCopy",
+      "request": "launch",
+      "mainClass": "Java.bai40_ObjectCopy",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai39_Encapsulationn",
+      "request": "launch",
+      "mainClass": "Java.bai39_Encapsulationn",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai38_AccessModifier",
+      "request": "launch",
+      "mainClass": "Java.bai38_AccessModifier",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai37_Abstraction",
+      "request": "launch",
+      "mainClass": "Java.bai37_Abstraction",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai36_SuperKeyword",
+      "request": "launch",
+      "mainClass": "Java.bai36_SuperKeyword",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai36_SuperKeyWord",
+      "request": "launch",
+      "mainClass": "Java.bai36_SuperKeyWord",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai35_MethodOveriding",
+      "request": "launch",
+      "mainClass": "Java.bai35_MethodOveriding",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai34_Inheritance",
+      "request": "launch",
+      "mainClass": "Java.bai34_Inheritance",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai33_StaticKeyword",
+      "request": "launch",
+      "mainClass": "Java.bai33_StaticKeyword",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai32_ObjectPassing",
+      "request": "launch",
+      "mainClass": "Java.bai32_ObjectPassing",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai31_ArrayOfObject",
+      "request": "launch",
+      "mainClass": "Java.bai31_ArrayOfObject",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai30_ToStringMethod",
+      "request": "launch",
+      "mainClass": "Java.bai30_ToStringMethod",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai29_ConstrOverloaded",
+      "request": "launch",
+      "mainClass": "Java.bai29_ConstrOverloaded",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai28_VariableScope",
+      "request": "launch",
+      "mainClass": "Java.bai28_VariableScope",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai27_Constructor",
+      "request": "launch",
+      "mainClass": "Java.bai27_Constructor",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai26_OOP",
+      "request": "launch",
+      "mainClass": "Java.bai26_OOP",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai25_FinalKeyword",
+      "request": "launch",
+      "mainClass": "Java.bai25_FinalKeyword",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai24_Printf",
+      "request": "launch",
+      "mainClass": "Java.bai24_Printf",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai23_OverloadedMethods",
+      "request": "launch",
+      "mainClass": "Java.bai23_OverloadedMethods",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai22_Methods",
+      "request": "launch",
+      "mainClass": "Java.bai22_Methods",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai5_expression",
+      "request": "launch",
+      "mainClass": "Java.bai5_expression",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai21_ForEachLoop",
+      "request": "launch",
+      "mainClass": "Java.bai21_ForEachLoop",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai20_2DArrayList",
+      "request": "launch",
+      "mainClass": "Java.bai20_2DArrayList",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai19_ArryList",
+      "request": "launch",
+      "mainClass": "Java.bai19_ArryList",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai17_StringMethods",
+      "request": "launch",
+      "mainClass": "Java.bai17_StringMethods",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai16_2DArray",
+      "request": "launch",
+      "mainClass": "Java.bai16_2DArray",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai15_Arrays",
+      "request": "launch",
+      "mainClass": "Java.bai15_Arrays",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai14_NestedLoop",
+      "request": "launch",
+      "mainClass": "Java.bai14_NestedLoop",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai13_ForLoop",
+      "request": "launch",
+      "mainClass": "Java.bai13_ForLoop",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai12_WhileLoop",
+      "request": "launch",
+      "mainClass": "Java.bai12_WhileLoop",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai11_LogicalOperators",
+      "request": "launch",
+      "mainClass": "Java.bai11_LogicalOperators",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai10_Switchs",
+      "request": "launch",
+      "mainClass": "Java.bai10_Switchs",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai9_IfStatements",
+      "request": "launch",
+      "mainClass": "Java.bai9_IfStatements",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai8_RandomNumbers",
+      "request": "launch",
+      "mainClass": "Java.bai8_RandomNumbers",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai7_mathClass",
+      "request": "launch",
+      "mainClass": "Java.bai7_mathClass",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "bai6_GuiIntro",
+      "request": "launch",
+      "mainClass": "Java.bai6_GuiIntro",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "expression",
+      "request": "launch",
+      "mainClass": "Java.expression",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "userJava",
+      "request": "launch",
+      "mainClass": "Java.userJava",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "tutu",
+      "request": "launch",
+      "mainClass": "Java.tutu",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "a124",
+      "request": "launch",
+      "mainClass": "Java.a124",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "a123",
+      "request": "launch",
+      "mainClass": "Java.a123",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "type": "java",
+      "name": "hello",
+      "request": "launch",
+      "mainClass": "Java.hello",
+      "projectName": "javaScript_3f90955b"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
