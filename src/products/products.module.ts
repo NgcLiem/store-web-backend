@@ -8,8 +8,8 @@ import { StaffProductsController } from './staff-products.controller';
 @Module({
   imports: [DbModule],
   controllers: [
-    AdminProductsController,   // route: /admin/products
-    StaffProductsController,   // route: /staff/products
+    AdminProductsController,
+    StaffProductsController,
   ],
   providers: [ProductsService],
 })

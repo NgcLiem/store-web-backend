@@ -44,4 +44,27 @@ export class ProductsController {
     async remove(@Param('id', ParseIntPipe) id: number) {
         return this.service.remove(id);
     }
+
+    // GET /products/autocomplete?query=...
+    @Get('autocomplete')
+    autocomplete(@Query('query') query: string) {
+        return this.service.autocomplete(query);
+    }
+
+    // GET /products/search?query=...&page=1&limit=12&sort=newest|price_asc|price_desc
+    @Get('search')
+    search(
+        @Query('query') query: string,
+        @Query('page') page?: string,
+        @Query('limit') limit?: string,
+        @Query('sort') sort?: 'newest' | 'price_asc' | 'price_desc',
+    ) {
+        return this.service.search({
+            query,
+            page: page ? Number(page) : 1,
+            limit: limit ? Number(limit) : 12,
+            sort,
+        });
+    }
+
 }

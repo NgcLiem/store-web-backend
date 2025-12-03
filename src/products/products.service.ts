@@ -132,4 +132,96 @@ export class ProductsService {
 
         return { ok: true, message: 'Đã cập nhật tồn kho' };
     }
+
+    async autocomplete(keyword: string) {
+        if (!keyword || keyword.length < 2) {
+            return [];
+        }
+
+        const like = `%${keyword}%`;
+        const sql = `
+    SELECT DISTINCT p.name, p.product_code, p.id
+    FROM products p
+    LEFT JOIN categories c ON p.category_id = c.id
+    WHERE p.name LIKE ? OR p.product_code LIKE ? OR c.name LIKE ?
+    LIMIT 8
+  `;
+        return this.db.query(sql, [like, like, like]);
+    }
+
+    // Search cho trang /search
+    async search(params: {
+        query?: string;
+        page?: number;
+        limit?: number;
+        sort?: 'newest' | 'price_asc' | 'price_desc';
+    }) {
+        const query = (params.query || '').trim();
+        const page = Math.max(params.page || 1, 1);
+        let limit = params.limit || 12;
+        limit = Math.min(Math.max(limit, 1), 48); // 1–48
+        const offset = (page - 1) * limit;
+
+        if (!query) {
+            throw new BadRequestException('Thiếu từ khóa tìm kiếm');
+        }
+
+        const like = `%${query}%`;
+        const whereParts: string[] = [
+            '(p.name LIKE ? OR p.product_code LIKE ? OR c.name LIKE ?)',
+        ];
+        const whereParams: any[] = [like, like, like];
+
+        let orderBy = 'p.created_at DESC';
+        switch (params.sort) {
+            case 'price_asc':
+                orderBy = 'p.price ASC';
+                break;
+            case 'price_desc':
+                orderBy = 'p.price DESC';
+                break;
+            default:
+                orderBy = 'p.created_at DESC';
+        }
+
+        const where = 'WHERE ' + whereParts.join(' AND ');
+
+        const itemsSql = `
+      SELECT 
+        p.id,
+        p.product_code,
+        p.name,
+        p.price,
+        p.image_url,
+        p.stock,
+        p.is_hot,
+        c.name AS category
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      ${where}
+      ORDER BY ${orderBy}
+      LIMIT ? OFFSET ?
+    `;
+        const items = await this.db.query(itemsSql, [
+            ...whereParams,
+            limit,
+            offset,
+        ]);
+
+        const countSql = `
+      SELECT COUNT(*) AS total
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      ${where}
+    `;
+        const countRows: any[] = await this.db.query(countSql, whereParams);
+        const total = Number(countRows[0]?.total || 0);
+
+        return {
+            items,
+            total,
+            page,
+            limit,
+        };
+    }
 }
