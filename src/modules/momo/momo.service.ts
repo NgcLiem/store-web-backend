@@ -49,20 +49,13 @@ export class MomoService {
                 'Thiếu cấu hình MOMO trong .env',
             );
         }
-
-        // 1. Tạo ID DUY NHẤT
-        // Format: PartnerCode + Timestamp + Random 4 số
         const uniqueSuffix = Date.now() + Math.floor(Math.random() * 1000);
         const requestId = `${partnerCode}${uniqueSuffix}`;
-        const momoOrderId = requestId; // MoMo khuyên requestId == orderId ở Sandbox
+        const momoOrderId = requestId;
 
-        // 2. Xử lý dữ liệu an toàn
-        // const amountStr = Math.floor(params.amount).toString(); // Bắt buộc số nguyên
-        // OrderInfo không dấu, không ký tự đặc biệt
         const amountStr = '10000';
         const orderInfo = `Thanh toan don hang ${params.internalOrderId}`;
 
-        // 3. Encode internalOrderId vào extraData (Quan trọng để map đơn hàng khi IPN)
         const extraDataObj = { internalOrderId: params.internalOrderId };
         const extraData = Buffer.from(JSON.stringify(extraDataObj)).toString(
             'base64',
@@ -71,7 +64,6 @@ export class MomoService {
         const requestType = 'captureWallet';
         const lang = 'vi';
 
-        // 4. Tạo chữ ký (ĐÚNG THỨ TỰ ALPHABET)
         const rawSignature =
             `accessKey=${accessKey}` +
             `&amount=${amountStr}` +

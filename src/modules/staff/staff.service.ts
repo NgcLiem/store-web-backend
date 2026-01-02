@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from '../../database/services/database.service';
+import * as bcrypt from 'bcrypt';
 
 export interface Staff {
     id: number;
@@ -11,13 +12,13 @@ export interface Staff {
     role: 'customer' | 'staff' | 'admin';
     created_at: Date | null;
     sex: string | null;
+    status: string;
 }
 
 @Injectable()
 export class StaffService {
-    constructor(private readonly db: DatabaseService) { }
+    constructor(private readonly db: DatabaseService) {}
 
-    // GET /staff?q=abc  → tìm theo email / full_name, chỉ role = 'staff'
     async findAll(q?: string) {
         let sql = "SELECT * FROM users WHERE role = 'staff'";
         const values: any[] = [];
@@ -41,10 +42,16 @@ export class StaffService {
         return rows[0] || null;
     }
 
-    // ⚠️ Lưu ý: ở đây mình chưa hash password, bạn nên hash bằng bcrypt nếu dùng thật
     async create(body: Partial<Staff>) {
         if (!body.email || !body.password || !body.full_name) {
-            throw new BadRequestException('Thiếu email, password hoặc full_name');
+            throw new BadRequestException(
+                'Thiếu email, password hoặc full_name',
+            );
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(body.email)) {
+            throw new BadRequestException('Email không đúng định dạng');
         }
 
         // kiểm tra email trùng
@@ -56,17 +63,20 @@ export class StaffService {
             throw new BadRequestException('Email đã tồn tại');
         }
 
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(body.password, saltRounds);
         const sql = `
-      INSERT INTO users (email, password, full_name, phone, address, role, sex)
-      VALUES (?, ?, ?, ?, ?, 'staff', ?)
+      INSERT INTO users (email, password, full_name, phone, address, role, sex, status)
+      VALUES (?, ?, ?, ?, ?, 'staff', ?, 'active')
     `;
         const params = [
             body.email,
-            body.password, // TODO: hash
+            hashedPassword,
             body.full_name,
             body.phone || null,
             body.address || null,
             body.sex || null,
+            body.status || null,
         ];
 
         await this.db.query(sql, params);
@@ -76,7 +86,19 @@ export class StaffService {
     async update(id: number, body: Partial<Staff>) {
         if (!id) throw new BadRequestException('Thiếu id');
 
-        const fields = ['email', 'password', 'full_name', 'phone', 'address', 'sex'];
+        if (body.password) {
+            const saltRounds = 10;
+            body.password = await bcrypt.hash(body.password, saltRounds);
+        }
+        const fields = [
+            'email',
+            'password',
+            'full_name',
+            'phone',
+            'address',
+            'sex',
+            'status',
+        ];
         const updates: string[] = [];
         const values: any[] = [];
 
@@ -100,7 +122,10 @@ export class StaffService {
 
     async remove(id: number) {
         if (!id) throw new BadRequestException('Thiếu id');
-        await this.db.query("DELETE FROM users WHERE id = ? AND role = 'staff'", [id]);
+        await this.db.query(
+            "DELETE FROM users WHERE id = ? AND role = 'staff'",
+            [id],
+        );
         return { ok: true, message: 'Đã xoá nhân viên' };
     }
 }

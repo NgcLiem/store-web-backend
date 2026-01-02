@@ -24,14 +24,15 @@ export interface Product {
     product_code?: string;
     name: string;
     price: number;
+    sale_price?: number;
     description?: string;
     image_url?: string;
     category_id?: number;
     stock?: number;
     created_at?: string;
     updated_at?: string;
+    is_hot?: number;
 
-    // sizes với thông tin kho theo size
     sizes?: SizeWithStock[];
 }
 
@@ -57,9 +58,11 @@ export class ProductsService {
         let sql = `
             SELECT 
                 p.id,
+                p.is_hot,
                 p.product_code,
                 p.name,
                 p.price,
+                p.sale_price,
                 p.description,
                 p.image_url,
                 p.category_id,
@@ -89,10 +92,12 @@ export class ProductsService {
                     product_code: row.product_code,
                     name: row.name,
                     price: row.price,
+                    sale_price: row.sale_price,
                     description: row.description,
                     image_url: row.image_url,
                     category_id: row.category_id,
-                    stock: 0, // sẽ tính từ sizes
+                    is_hot: row.is_hot,
+                    stock: 0,
                     sizes: [],
                 });
             }
@@ -112,25 +117,6 @@ export class ProductsService {
 
         return Array.from(productMap.values());
     }
-
-    //     async findOne(id: number): Promise<Product> {
-    //         if (!id) throw new BadRequestException('Thiếu id');
-
-    //         const rows = await this.db.query<Product>(
-    //             'SELECT * FROM products WHERE id = ?',
-    //             [id],
-    //         );
-    //         if (rows.length === 0) {
-    //             throw new NotFoundException('Không tìm thấy sản phẩm');
-    //         }
-    //         return rows[0];
-    //     }
-
-    //     export interface SizeRow {
-    //     size_id: number;
-    //     value: string;
-    //     stock: number;
-    // }
 
     async findOne(id: number): Promise<Product> {
         if (!id) throw new BadRequestException('Thiếu id');
@@ -183,21 +169,21 @@ export class ProductsService {
             await conn.beginTransaction();
 
             const [result] = await conn.execute(
-                `INSERT INTO products (product_code, name, price, description, image_url)
-       VALUES (?, ?, ?, ?, ?)`,
+                `INSERT INTO products (product_code, name, price, sale_price, description, image_url, is_hot)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
                 [
                     body.product_code || null,
                     body.name,
                     Number(body.price || 0),
+                    body.sale_price ? Number(body.sale_price) : null,
                     body.description || null,
                     body.image_url || null,
+                    body.is_hot ? 1 : 0,
                 ],
             );
 
             const productId = (result as any).insertId;
 
-            // upsert sizes
-            // dùng conn hay this.db đều được, nhưng đang transaction thì nên dùng conn
             if (Array.isArray(body.sizes)) {
                 // validate size tồn tại
                 const cleaned = body.sizes
@@ -268,8 +254,10 @@ export class ProductsService {
                 'product_code',
                 'name',
                 'price',
+                'sale_price',
                 'description',
                 'image_url',
+                'is_hot',
             ];
             const updates: string[] = [];
             const values: any[] = [];
@@ -301,10 +289,6 @@ export class ProductsService {
                             Number.isInteger(s.size_id) && s.size_id > 0,
                     );
 
-                //  nếu muốn "đồng bộ y hệt" (FE gửi gì giữ đúng đó) thì:
-                // 1) xóa hết size hiện tại của product
-                // 2) insert lại
-                // (an toàn + đơn giản)
                 await conn.execute(
                     `DELETE FROM product_sizes WHERE product_id = ?`,
                     [id],
@@ -413,6 +397,7 @@ export class ProductsService {
         p.product_code,
         p.name,
         p.price,
+        p.sale_price,
         p.image_url,
         c.name AS category
       FROM products p
@@ -442,54 +427,5 @@ export class ProductsService {
             page,
             limit,
         };
-    }
-
-    private async upsertProductSizes(productId: number, sizes: any[]) {
-        // sizes: [{ size_id, stock }]
-        if (!Array.isArray(sizes)) return;
-
-        // lọc hợp lệ
-        const cleaned = sizes
-            .map((s) => ({
-                size_id: Number(s.size_id),
-                stock: Math.max(0, Number(s.stock || 0)),
-            }))
-            .filter((s) => Number.isInteger(s.size_id) && s.size_id > 0);
-
-        // nếu không có sizes => không làm gì (hoặc bạn muốn clear thì xử lý riêng)
-        if (cleaned.length === 0) return;
-
-        // (Tuỳ chọn) validate size_id có tồn tại trong sizes
-        const ids = cleaned.map((x) => x.size_id);
-        const exist = await this.db.query<any>(
-            `SELECT id FROM sizes WHERE id IN (${ids.map(() => '?').join(',')})`,
-            ids,
-        );
-        const existSet = new Set(exist.map((x) => Number(x.id)));
-        for (const s of cleaned) {
-            if (!existSet.has(s.size_id)) {
-                throw new BadRequestException(
-                    `size_id=${s.size_id} không tồn tại trong bảng sizes`,
-                );
-            }
-        }
-
-        // upsert product_sizes
-        // cần UNIQUE(product_id, size_id)
-        const values: any[] = [];
-        const placeholders = cleaned
-            .map((s) => {
-                values.push(productId, s.size_id, s.stock);
-                return '(?, ?, ?)';
-            })
-            .join(',');
-
-        const sql = `
-    INSERT INTO product_sizes (product_id, size_id, stock)
-    VALUES ${placeholders}
-    ON DUPLICATE KEY UPDATE stock = VALUES(stock)
-  `;
-
-        await this.db.query(sql, values);
     }
 }

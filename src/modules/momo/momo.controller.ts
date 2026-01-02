@@ -85,7 +85,7 @@ export class MomoController {
                 );
             } else {
                 // Thất bại
-                console.log(`⚠️ Order #${internalOrderId} FAILED: ${message}`);
+                console.log(`Order #${internalOrderId} FAILED: ${message}`);
                 await this.orders.updatePaymentStatusByOrderId(
                     internalOrderId,
                     {

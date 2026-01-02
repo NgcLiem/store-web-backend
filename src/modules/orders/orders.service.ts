@@ -57,7 +57,6 @@ export class OrdersService {
             values.push(status);
         }
 
-        // q: allow searching by order id (exact/partial) or user's email/phone/name
         if (q && String(q).trim()) {
             const needle = `%${String(q).trim()}%`;
             const qTrim = String(q).trim();
@@ -80,7 +79,7 @@ export class OrdersService {
         return this.db.query<Order>(sql, values);
     }
 
-    // GET /orders/:id (trả order + items) - 1 query rồi group về 1 object
+    // GET /orders/:id
     async findOneWithItems(id: number) {
         if (!id) throw new BadRequestException('Thiếu id');
 
@@ -139,7 +138,6 @@ export class OrdersService {
             shipping_address: r0.shipping_address,
             payment_method: r0.payment_method,
 
-            //  thêm thông tin user để FE dùng
             customer_name: r0.addr_full_name || r0.customer_name,
             customer_phone: r0.addr_phone || r0.customer_phone,
             customer_email: r0.customer_email,
@@ -157,10 +155,9 @@ export class OrdersService {
                 size: r.oi_size,
                 price: r.oi_price,
 
-                //  fields FE đang cần
                 product_name: r.product_name,
                 image_url: r.product_image_url,
-                name: r.product_name, // nếu FE fallback item.name
+                name: r.product_name,
             });
         }
 
@@ -188,15 +185,20 @@ export class OrdersService {
 
         // Lấy giá hiện tại của sản phẩm
         const products = await this.db.query<any>(
-            `SELECT id, price FROM products WHERE id IN (${productIds
+            `SELECT id, price, sale_price FROM products WHERE id IN (${productIds
                 .map(() => '?')
                 .join(',')})`,
             productIds,
         );
 
         const priceMap = new Map<number, number>();
-        products.forEach((p: any) => priceMap.set(p.id, Number(p.price)));
-
+        products.forEach((p: any) => {
+            const finalPrice =
+                p.sale_price && p.sale_price < p.price
+                    ? Number(p.sale_price)
+                    : Number(p.price);
+            priceMap.set(p.id, finalPrice);
+        });
         let total = 0;
         const orderItemsToInsert: {
             product_id: number;
@@ -306,7 +308,7 @@ export class OrdersService {
         try {
             await conn.beginTransaction();
 
-            // 1) address
+            // address
             const [addressRows] = await conn.query(
                 'SELECT * FROM addresses WHERE id = ? AND user_id = ?',
                 [address_id, userId],
@@ -315,7 +317,7 @@ export class OrdersService {
             if (!address) throw new BadRequestException('Địa chỉ không hợp lệ');
             const shippingAddress: string = address.address_line;
 
-            // 2) payment method
+            // payment method
             let paymentEnum: 'cod' | 'credit_card' | 'bank_transfer' = 'cod';
             let paymentMethodId: number | null = null;
             let paymentBrand: string | null = null;
@@ -343,11 +345,10 @@ export class OrdersService {
                 else paymentEnum = 'cod';
             }
 
-            // 3) Chuẩn hoá items + lấy danh sách productIds
+            // Chuẩn hoá items + lấy danh sách productIds
             const normalizedItems = items.map((it: any) => ({
                 product_id: Number(it.product_id),
                 quantity: Math.max(1, Number(it.quantity || 1)),
-                // FE gửi size_value (vd "41", "42", "41.5") hoặc có thể gửi số
                 size_raw: it.size ?? null,
             }));
 
@@ -359,21 +360,26 @@ export class OrdersService {
                     'Danh sách sản phẩm không hợp lệ',
                 );
 
-            // 4) Lấy giá products
+            // Lấy giá products
             const placeholders = productIds.map(() => '?').join(',');
             const [prodRows] = await conn.query(
-                `SELECT id, price FROM products WHERE id IN (${placeholders})`,
+                `SELECT id, price, sale_price FROM products WHERE id IN (${placeholders})`,
                 productIds,
             );
             const products = prodRows as any[];
 
-            const priceMap = new Map<number, number>();
-            for (const p of products)
-                priceMap.set(Number(p.id), Number(p.price));
+            // const priceMap = new Map<number, number>();
+            // for (const p of products)
+            //     priceMap.set(Number(p.id), Number(p.price));
 
-            // 5) Map size_raw -> size_id từ bảng sizes
-            // - Nếu size_raw là number và tồn tại sizes.id => dùng luôn
-            // - Nếu không, coi như size_value => map theo sizes.size_value
+            const priceMap = new Map<number, number>();
+            for (const p of products) {
+                const finalPrice =
+                    p.sale_price && p.sale_price < p.price
+                        ? Number(p.sale_price)
+                        : Number(p.price);
+                priceMap.set(Number(p.id), finalPrice);
+            }
             const sizeRawList = normalizedItems
                 .map((i) => i.size_raw)
                 .filter((v) => v !== null && v !== undefined);
@@ -454,12 +460,10 @@ export class OrdersService {
                     product_id: it.product_id,
                     quantity: it.quantity,
                     size_id,
-                    size_value: rawStr, // để debug/log
+                    size_value: rawStr,
                 };
             });
 
-            // 6) Lấy stock theo (product_id, size_id) từ product_sizes
-            // dùng row constructor: WHERE (product_id, size_id) IN ((?,?),(?,?),...)
             const pairParams: any[] = [];
             const pairPlaceholders = resolvedItems
                 .map((x) => {
@@ -481,7 +485,7 @@ export class OrdersService {
                 );
             }
 
-            // 7) tính tiền + check stock theo size
+            //tính tiền + check stock theo size
             let subTotal = 0;
             const orderItemsToInsert: {
                 product_id: number;
@@ -521,7 +525,7 @@ export class OrdersService {
                 });
             }
 
-            // 8) voucher
+            //voucher
             let discount = 0;
             let voucherId: number | null = null;
             let userVoucherId: number | null = null;
@@ -541,7 +545,7 @@ export class OrdersService {
             let totalAmount = subTotal - discount + shippingFee;
             if (totalAmount < 0) totalAmount = 0;
 
-            // 9) insert order
+            //insert order
             const [orderResult] = await conn.execute(
                 `
         INSERT INTO orders (
@@ -566,9 +570,6 @@ export class OrdersService {
             );
             const orderId = (orderResult as any).insertId;
 
-            // 10) insert order_items (lưu size_id hoặc size_value tuỳ bạn thiết kế cột)
-            // hiện bạn đang có oi.size (string). Nếu muốn lưu size_value: JOIN sizes lấy size_value.
-            // Ở đây mình lưu size_id vào oi.size luôn (string) để khỏi sửa schema:
             for (const oi of orderItemsToInsert) {
                 await conn.execute(
                     `INSERT INTO order_items (order_id, product_id, quantity, size, price) VALUES (?, ?, ?, ?, ?)`,
@@ -582,7 +583,7 @@ export class OrdersService {
                 );
             }
 
-            // 11) trừ kho trong product_sizes
+            // trừ kho trong product_sizes
             for (const oi of orderItemsToInsert) {
                 const [upd] = await conn.execute(
                     `UPDATE product_sizes
@@ -598,7 +599,7 @@ export class OrdersService {
                 }
             }
 
-            // 12) clear cart
+            // clear cart
             const [cartRows] = await conn.query(
                 'SELECT id FROM carts WHERE user_id = ? LIMIT 1',
                 [userId],
@@ -610,14 +611,14 @@ export class OrdersService {
                 ]);
             }
 
-            // 13) mark voucher used
+            // mark voucher used
             if (userVoucherId) {
                 await this.vouchersService.markUsed(userVoucherId);
             }
 
             await conn.commit();
 
-            // 14) momo mock
+            // momo mock
             const isMomo =
                 String(paymentType || '').toUpperCase() === 'WALLET' &&
                 String(paymentBrand || '').toUpperCase() === 'MOMO';
@@ -729,7 +730,7 @@ export class OrdersService {
             return { ok: true, message: 'Không có dữ liệu cập nhật' };
         }
 
-        // 1) Thử update đầy đủ
+        // Thử update đầy đủ
         try {
             values.push(id);
             await this.db.query(
@@ -738,7 +739,7 @@ export class OrdersService {
             );
             return { ok: true };
         } catch (e: any) {
-            // 2) Fallback: DB chưa có cột momo_*, chỉ update status
+            // Fallback: DB chưa có cột momo_*, chỉ update status
             if (payload.status !== undefined) {
                 await this.db.query(
                     'UPDATE orders SET status = ? WHERE id = ?',

@@ -12,18 +12,15 @@ import {
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
-// Nếu bạn đã có RolesGuard / Roles decorator thì dùng đúng cái của bạn.
-// Mình viết theo pattern phổ biến.
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles('admin') // chỉ admin vào được
+@Roles('admin')
 @Controller('admin/orders')
 export class OrdersAdminController {
-    constructor(private readonly ordersService: OrdersService) { }
+    constructor(private readonly ordersService: OrdersService) {}
 
-    // GET /admin/orders?status=pending&q=...&page=1&pageSize=10
     @Get()
     async list(
         @Query('status') status?: string,
@@ -39,7 +36,6 @@ export class OrdersAdminController {
             q: q?.trim() || undefined,
         });
 
-        // (tuỳ chọn) phân trang phía backend
         const start = (p - 1) * ps;
         const items = all.slice(start, start + ps);
 
@@ -59,7 +55,6 @@ export class OrdersAdminController {
         @Body() body: { status: string },
     ) {
         await this.ordersService.update(id, { status: body.status as any });
-        // Return updated order with items
         return await this.ordersService.findOneWithItems(id);
     }
 

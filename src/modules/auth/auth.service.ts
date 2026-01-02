@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import {
+    Injectable,
+    UnauthorizedException,
+    BadRequestException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DatabaseService } from '../../database/services/database.service';
 import * as bcrypt from 'bcrypt';
@@ -11,7 +15,7 @@ export class AuthService {
         private jwtService: JwtService,
         private db: DatabaseService,
         private mailService: MailService,
-    ) { }
+    ) {}
 
     async login(email: string, password: string) {
         console.log('LOGIN INPUT:', email);
@@ -30,7 +34,9 @@ export class AuthService {
         }
 
         if (user.status !== 'active') {
-            throw new UnauthorizedException('Tài khoản của bạn đang bị khoá hoặc chưa được kích hoạt');
+            throw new UnauthorizedException(
+                'Tài khoản của bạn đang bị khoá hoặc chưa được kích hoạt',
+            );
         }
 
         const match = await bcrypt.compare(password, user.password);
@@ -57,7 +63,12 @@ export class AuthService {
         };
     }
 
-    async register(dto: { email: string; password: string; fullName: string; sex: string; }) {
+    async register(dto: {
+        email: string;
+        password: string;
+        fullName: string;
+        sex: string;
+    }) {
         const { email, password, fullName, sex } = dto;
 
         if (!email || !password || !fullName || !sex) {
@@ -105,7 +116,9 @@ export class AuthService {
         );
 
         if (!rows || rows.length === 0 || rows[0].status !== 'active') {
-            throw new BadRequestException('Token không hợp lệ hoặc đã hết hạn!');
+            throw new BadRequestException(
+                'Token không hợp lệ hoặc đã hết hạn!',
+            );
         }
 
         const user = rows[0];
@@ -173,17 +186,25 @@ export class AuthService {
 
             return { message: 'Admin user seeded!' };
         } catch (err) {
-            throw new BadRequestException('Không thể tạo admin: ' + err.message);
+            throw new BadRequestException(
+                'Không thể tạo admin: ' + err.message,
+            );
         }
     }
 
-    async changePassword(userId: number, oldPassword: string, newPassword: string) {
+    async changePassword(
+        userId: number,
+        oldPassword: string,
+        newPassword: string,
+    ) {
         if (!oldPassword || !newPassword) {
             throw new BadRequestException('Thiếu mật khẩu cũ hoặc mới!');
         }
 
         if (oldPassword === newPassword) {
-            throw new BadRequestException('Mật khẩu mới phải khác mật khẩu cũ!');
+            throw new BadRequestException(
+                'Mật khẩu mới phải khác mật khẩu cũ!',
+            );
         }
 
         const rows = await this.db.query<any>(
@@ -203,7 +224,10 @@ export class AuthService {
         }
 
         const hashed = await bcrypt.hash(newPassword, 10);
-        await this.db.query('UPDATE users SET password = ? WHERE id = ?', [hashed, userId]);
+        await this.db.query('UPDATE users SET password = ? WHERE id = ?', [
+            hashed,
+            userId,
+        ]);
 
         return { message: 'Đổi mật khẩu thành công!' };
     }
@@ -214,21 +238,20 @@ export class AuthService {
 
         // lọc hợp lệ
         const cleaned = sizes
-            .map(s => ({
+            .map((s) => ({
                 size_id: Number(s.size_id),
                 stock: Math.max(0, Number(s.stock || 0)),
             }))
-            .filter(s => Number.isInteger(s.size_id) && s.size_id > 0);
+            .filter((s) => Number.isInteger(s.size_id) && s.size_id > 0);
 
-        // nếu không có sizes => không làm gì (hoặc bạn muốn clear thì xử lý riêng)
+        // nếu không có sizes
         if (cleaned.length === 0) return;
 
-        // (Tuỳ chọn) validate size_id có tồn tại trong sizes
-        const ids = cleaned.map(x => x.size_id);
+        // validate size_id có tồn tại trong sizes
+        const ids = cleaned.map((x) => x.size_id);
         const exist = await this.db.query<any>(
             `SELECT id FROM sizes WHERE id IN (${ids.map(() => '?').join(',')})`,
             ids,
         );
-
     }
 }

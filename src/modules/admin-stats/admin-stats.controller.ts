@@ -1,4 +1,3 @@
-// src/modules/admin-stats/admin-stats.controller.ts
 import { Controller, Get, Query } from '@nestjs/common';
 import { AdminStatsService } from './admin-stats.service';
 

@@ -51,7 +51,7 @@ export class AdminStatsService {
     }
 
     async getSummary(): Promise<Summary> {
-        // 1) Tổng doanh thu (chỉ tính đơn hợp lệ)
+        // Tổng doanh thu (chỉ tính đơn hợp lệ)
         const totalRevenueRows = await this.db.query<{ total: number }>(
             `
       SELECT COALESCE(SUM(total_amount),0) AS total
@@ -61,7 +61,7 @@ export class AdminStatsService {
             [],
         );
 
-        // 2) Doanh thu tháng này
+        // Doanh thu tháng này
         const thisMonthRows = await this.db.query<{ total: number }>(
             `
       SELECT COALESCE(SUM(total_amount),0) AS total
@@ -72,7 +72,7 @@ export class AdminStatsService {
             [],
         );
 
-        // 3) Tổng số sản phẩm bán được (sum quantity) từ order_items join orders
+        // Tổng số sản phẩm bán được (sum quantity) từ order_items join orders
         const soldRows = await this.db.query<{ total: number }>(
             `
       SELECT COALESCE(SUM(oi.quantity),0) AS total
@@ -83,7 +83,7 @@ export class AdminStatsService {
             [],
         );
 
-        // 4) Sản phẩm mới (ví dụ: 30 ngày gần nhất)
+        // Sản phẩm mới (ví dụ: 30 ngày gần nhất)
         const newProductsRows = await this.db.query<{ total: number }>(
             `
       SELECT COUNT(*) AS total
@@ -102,7 +102,6 @@ export class AdminStatsService {
     }
 
     async getDaily(days: number): Promise<Point[]> {
-        // Fix only_full_group_by: group theo d=DATE(order_date), label tạo từ d
         const rows = await this.db.query<Point>(
             `
       SELECT 
@@ -134,7 +133,6 @@ export class AdminStatsService {
     }
 
     async getMonthly(months: number): Promise<Point[]> {
-        // group theo ym=DATE_FORMAT(order_date,'%Y-%m'), label tạo từ ym (không đụng order_date trực tiếp)
         const rows = await this.db.query<Point>(
             `
       SELECT
